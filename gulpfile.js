@@ -1,15 +1,34 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var bower = require('bower');
-var concat = require('gulp-concat');
-var sass = require('gulp-sass');
-var minifyCss = require('gulp-minify-css');
-var rename = require('gulp-rename');
-var sh = require('shelljs');
+//var concat = require('gulp-concat');
+//var sass = require('gulp-sass');
+//var minifyCss = require('gulp-minify-css');
+//var rename = require('gulp-rename');
+//var sh = require('shelljs');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./scss/**/*.scss'],
+  html: ['./app/**/*.html']
 };
+
+
+/**
+ * Pfade von SCSS und Scripts definieren.
+ */
+var paths = {
+  sass: ['./app/**/*.scss'],
+  scripts: ['./app/app.js', './app/app.config.js', './app/**/*.js'],
+  html: ['./app/**/*.html'],
+  scriptsVendor: [
+    './node_modules/ionic-release/js/ionic.bundle.js',
+    './node_modules/ng-cordova/dist/ng-cordova.js',
+    './node_modules/angular-translate/dist/angular-translate.js',
+    './node_modules/angular-translate/dist/angular-translate-loader-static-files/angular-translate-loader-static-files.js'
+  ],
+  mock: ['./app/mock/**/*.json']
+};
+
 
 gulp.task('default', ['sass']);
 
@@ -48,4 +67,11 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+/**
+ * Watcher fuer Test.
+ */
+gulp.task('watch-test', function () {
+  gulp.watch(paths.html, ['templates']);
 });
